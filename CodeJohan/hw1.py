@@ -7,6 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.tree import plot_tree
+
 # EXERCISE 2
 def arffToDf(file: str):
     data, meta = arff.loadarff(file) # meta contem o nome dos atributos que servem de colunas
@@ -35,13 +36,17 @@ def rankDiscriminativePower(df):
     worst_feature = anova_results.iloc[-1]['Feature']
 
     plt.figure(figsize=(14, 6))
+
     # Best feature plot
     plt.subplot(1, 2, 1)
     sns.kdeplot(data=diabetes_df, x=best_feature, hue='Outcome', common_norm=False)
+    plt.xlim(left=0)  # Set the x-axis lower limit to 0
     plt.title(f'Class-Conditional Density of Best Feature: {best_feature}')
+    
     # Worst feature plot
     plt.subplot(1, 2, 2)
     sns.kdeplot(data=diabetes_df, x=worst_feature, hue='Outcome', common_norm=False)
+    plt.xlim(left=0)  # Set the x-axis lower limit to 0
     plt.title(f'Class-Conditional Density of Worst Feature: {worst_feature}')
 
     plt.tight_layout()
@@ -53,6 +58,7 @@ disc_rank_results = rankDiscriminativePower(diabetes_df)
 
 
 # EXERCISE 2-4: Decision Tree classifier with varying min_samples_split
+
 def decision_tree_analysis(df):
 
     # Ensure the Outcome column is categorical, else we get value error from cls calling
@@ -74,7 +80,7 @@ def decision_tree_analysis(df):
 
     # Train and evaluate Decision Tree for each min_samples_split
     for split in min_samples_splits:
-        clf = DecisionTreeClassifier(min_samples_split=split, random_state=1)
+        clf = DecisionTreeClassifier(criterion='entropy',min_samples_split=split, random_state=1)
         clf.fit(X_train, y_train)
 
         # Accuracy on training data appended to list
