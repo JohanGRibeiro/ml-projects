@@ -80,7 +80,7 @@ def decision_tree_analysis(df):
 
     # Train and evaluate Decision Tree for each min_samples_split
     for split in min_samples_splits:
-        clf = DecisionTreeClassifier(criterion='entropy',min_samples_split=split, random_state=1)
+        clf = DecisionTreeClassifier(min_samples_split=split, random_state=1)
         clf.fit(X_train, y_train)
 
         # Accuracy on training data appended to list

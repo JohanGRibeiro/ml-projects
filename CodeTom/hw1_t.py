@@ -95,15 +95,19 @@ def trainTestSplit(df, min_samples_split, n_runs=10):
     for _ in range(n_runs):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 
+        # Define model
         model = DecisionTreeClassifier(min_samples_split=min_samples_split)
         model.fit(X_train, y_train)
 
+        # Define prediction arrays
         y_train_pred = model.predict(X_train)
         y_test_pred = model.predict(X_test)
 
+        # Get accuracy score from prediction arrays
         train_accuracy = accuracy_score(y_train, y_train_pred)
         test_accuracy = accuracy_score(y_test, y_test_pred)
 
+        # Append them to the lists
         train_accuracies.append(train_accuracy)
         test_accuracies.append(test_accuracy)
 
